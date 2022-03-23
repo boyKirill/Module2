@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/main.css">
+	<title>2048</title>
+</head>
+
+<body>
+	<div class="wrapper">
+		<main>
+			<div class="body-container">
+				<header class="header">
+					<div class="header__container">
+						<div class="header__title">2048</div>
+						<div class="header__tabl">
+							<div class="header__score">Score: <span id="score_1">0</span></div>
+							<div class="header__record">Record:<span id="record_1">0</span></div>
+						</div>
+					</div>
+					<div class="header__sub-title">Получи плитку <span>2048</span> чтобы выиграть!</div>
+				</header>
+				<div class="container">
+					<div class="cell" id="c00"></div>
+					<div class="cell" id="c01"></div>
+					<div class="cell" id="c02"></div>
+					<div class="cell" id="c03"></div>
+					<div class="cell" id="c04"></div>
+
+					<div class="cell" id="c10"></div>
+					<div class="cell" id="c11"></div>
+					<div class="cell" id="c12"></div>
+					<div class="cell" id="c13"></div>
+					<div class="cell" id="c14"></div>
+
+					<div class="cell" id="c20"></div>
+					<div class="cell" id="c21"></div>
+					<div class="cell" id="c22"></div>
+					<div class="cell" id="c23"></div>
+					<div class="cell" id="c24"></div>
+
+					<div class="cell" id="c30"></div>
+					<div class="cell" id="c31"></div>
+					<div class="cell" id="c32"></div>
+					<div class="cell" id="c33"></div>
+					<div class="cell" id="c34"></div>
+
+					<div class="cell" id="c40"></div>
+					<div class="cell" id="c41"></div>
+					<div class="cell" id="c42"></div>
+					<div class="cell" id="c43"></div>
+					<div class="cell" id="c44"></div>
+
+					<div class="gameover" id="gameover">
+						<div class="over" id="over">
+							<p class="over__text">GAME OVER!!!</p>
+							<p class="over__score">SCORE: <span id="score_2">0</span></p>
+							<p class="record">RECORD:<span id="record_2">0</span></p>
+							<a class="over__again" href="javascript:game.start()">try again!</a>
+						</div>
+					</div>
+
+					<div class="gamewin" id="gamewin">
+						<div class="win" id="win">
+							<p class="win__text">YOU WIN!!!</p>
+							<p class="win__score">SCORE: <span id="score_3">0</span></p>
+							<p class="win__time" id="winTime"></p>
+							<p class="win__record">RECORD:<span id="record_3">0</span></p>
+							<a class="win__again" href="javascript:game.start()">Try Again!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="table">
+				<div class="table__title">Best time</div>
+				<ul class="table__body">
+
+				</ul>
+			</div>
+
+
+		</main>
+	</div>
+
+	<script src="main.js"></script>
+</body>
+
+</html>
