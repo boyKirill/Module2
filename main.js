@@ -135,30 +135,29 @@ let game = {
 		document.querySelector('.table__body').innerHTML = "";
 
 		// получаем нужный формат от каждого элемента массива и аписываем в таблицу
-		this.timeStapsArr.forEach(element => {
+		for (let k = 0; k < this.timeStapsArr.length; k++) {
+			let h = Math.floor(this.timeStapsArr[k] / 3600000);
+			this.timeStapsArr[k] -= h * 3600000;
 
-			let h = Math.floor(element / 3600000);
-			element -= h * 3600000;
+			let m = Math.floor(this.timeStapsArr[k] / 60000);
+			this.timeStapsArr[k] -= m * 60000;
 
-			let m = Math.floor(element / 60000);
-			element -= m * 60000;
+			let s = Math.floor(this.timeStapsArr[k] / 1000);
+			this.timeStapsArr[k] -= s * 1000;
 
-			let s = Math.floor(element / 1000);
-			element -= s * 1000;
-
-			let ms = element;
+			let ms = this.timeStapsArr[k];
 
 			li = document.createElement('li');
-			li.textContent = `${h}ч:${m}м:${s}с:${ms}мс`;
+			li.textContent = `${k + 1}) ${h}ч:${m}м:${s}с:${ms}мс`;
 
 			document.querySelector('.table__body').appendChild(li);
-		});
+		}
 	},
 
 	isGameWin: function () {
 		for (var r = 0; r < 5; r++) {
 			for (var c = 0; c < 5; c++) {
-				if (this.data[r][c] == 2048) {
+				if (this.data[r][c] == 8) {
 					this.gamewin = 1;
 					this.endTime = new Date();
 					return this.gamewin;
@@ -468,15 +467,12 @@ var sX, sY, eX, eY;
 document.querySelector(".container").addEventListener('mousedown', function (e) {
 	sX = e.clientX;
 	sY = e.clientY;
-	console.log(sX);
-	console.log(sY);
 })
 
 document.querySelector(".container").addEventListener('mouseup', function (e) {
 	eX = e.clientX;
 	eY = e.clientY;
-	console.log(eX);
-	console.log(eY);
+
 	var x = eX - sX;
 	var y = eY - sY;
 
