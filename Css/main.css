@@ -249,6 +249,7 @@ main {
 
 .table__body li {
   list-style-type: none;
+  padding: 0 10px;
   font-family: "Caveat", cursive;
 }
 
@@ -301,14 +302,3 @@ main {
   font-size: 32px;
   color: #fff;
 }
-
-/*.n4096 {
-	background-color: #a6c;
-	font-size: 30px;
-	color: #fff;
-}
-.n8192 {
-	background-color: #93c;
-	font-size: 30px;
-	color: #fff;
-}*/
