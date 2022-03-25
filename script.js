@@ -285,3 +285,34 @@ document.onkeydown = function (event) {
 }
 
 
+var startX, startY, endX, endY;    // Определение четырех переменных для хранения значений по оси X и оси Y при касании и при выходе из касания
+document.addEventListener("touchstart", function (event) {  // Связывание события слушателя при начале касания пальцем
+	var event = event || e || arguments[0];
+	startX = event.touches[0].pageX;
+	startY = event.touches[0].pageY;
+})
+
+document.addEventListener("touchend", function (event) {    // Привязка события прослушивания, когда палец касается и уходит
+	var event = event || e || arguments[0];
+	endX = event.changedTouches[0].pageX;
+	endY = event.changedTouches[0].pageY;
+
+	var x = endX - startX;
+	var y = endY - startY;
+
+	var absX = Math.abs(x) > Math.abs(y);
+	var absY = Math.abs(y) > Math.abs(x);
+	if (x > 0 && absX) {
+		game.moveRight();
+	}
+	else if (x < 0 && absX) {
+		game.moveLeft();
+	}
+	else if (y > 0 && absY) {
+		game.moveBottom();
+	}
+	else if (y < 0 && absY) {
+		game.moveTop();
+	}
+
+})

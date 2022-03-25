@@ -124,10 +124,10 @@ let game = {
 
 		let ms = this.Time;
 
-		document.getElementById('winTime').innerHTML = `Time: <span>${h}h:${m}m:${s}s:${ms}ms</span>`;
+		document.getElementById('winTime').innerHTML = `Время: <span>${h}ч:${m}м:${s}с:${ms}мс</span>`;
 
 		// сортируем массив от меньшего количества миллисекунд к большему
-		this.timeStapsArr.sort(function (a, b) { 
+		this.timeStapsArr.sort(function (a, b) {
 			return a - b;
 		});
 
@@ -149,8 +149,8 @@ let game = {
 			let ms = element;
 
 			li = document.createElement('li');
-			li.textContent = `${h}h:${m}m:${s}s:${ms}ms`;
-			li.style.listStyleType = 'none';
+			li.textContent = `${h}ч:${m}м:${s}с:${ms}мс`;
+
 			document.querySelector('.table__body').appendChild(li);
 		});
 	},
@@ -424,13 +424,13 @@ document.onkeydown = function (event) {
 
 
 var startX, startY, endX, endY;    // Определение четырех переменных для хранения значений по оси X и оси Y при касании и при выходе из касания
-document.addEventListener("touchstart", function (event) {  // Связывание события слушателя при начале касания пальцем
+document.querySelector(".container").addEventListener("touchstart", function (event) {  // Связывание события слушателя при начале касания пальцем
 	var event = event || e || arguments[0];
 	startX = event.touches[0].pageX;
 	startY = event.touches[0].pageY;
 })
 
-document.addEventListener("touchend", function (event) {    // Привязка события прослушивания, когда палец касается и уходит
+document.querySelector(".container").addEventListener("touchend", function (event) {    // Привязка события прослушивания, когда палец касается и уходит
 	var event = event || e || arguments[0];
 	endX = event.changedTouches[0].pageX;
 	endY = event.changedTouches[0].pageY;
@@ -441,16 +441,24 @@ document.addEventListener("touchend", function (event) {    // Привязка 
 	var absX = Math.abs(x) > Math.abs(y);
 	var absY = Math.abs(y) > Math.abs(x);
 	if (x > 0 && absX) {
-		game.moveRight();
+		if (game.isGameWin() != 1) {
+			game.moveRight();
+		}
 	}
 	else if (x < 0 && absX) {
-		game.moveLeft();
+		if (game.isGameWin() != 1) {
+			game.moveLeft();
+		}
 	}
 	else if (y > 0 && absY) {
-		game.moveBottom();
+		if (game.isGameWin() != 1) {
+			game.moveBottom();
+		}
 	}
 	else if (y < 0 && absY) {
-		game.moveTop();
+		if (game.isGameWin() != 1) {
+			game.moveTop();
+		}
 	}
 
 })

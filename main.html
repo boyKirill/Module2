@@ -6,7 +6,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="Css/main.css">
+	<link rel="stylesheet" href="Css/adaptive.css">
 	<title>2048</title>
 </head>
 
@@ -14,16 +15,16 @@
 	<div class="wrapper">
 		<main>
 			<div class="body-container">
-				<header class="header">
+				<div class="header">
 					<div class="header__container">
 						<div class="header__title">2048</div>
 						<div class="header__tabl">
-							<div class="header__score">Score: <span id="score_1">0</span></div>
-							<div class="header__record">Record:<span id="record_1">0</span></div>
+							<div class="header__score">Счет: <span id="score_1">0</span></div>
+							<div class="header__record">Рекорд: <span id="record_1">0</span></div>
 						</div>
 					</div>
 					<div class="header__sub-title">Получи плитку <span>2048</span> чтобы выиграть!</div>
-				</header>
+				</div>
 				<div class="container">
 					<div class="cell" id="c00"></div>
 					<div class="cell" id="c01"></div>
@@ -57,35 +58,32 @@
 
 					<div class="gameover" id="gameover">
 						<div class="over" id="over">
-							<p class="over__text">GAME OVER!!!</p>
-							<p class="over__score">SCORE: <span id="score_2">0</span></p>
-							<p class="record">RECORD:<span id="record_2">0</span></p>
-							<a class="over__again" href="javascript:game.start()">try again!</a>
+							<p class="over__text">ИГРА ОКОНЧЕНА!!!</p>
+							<p class="over__score">Счет: <span id="score_2">0</span></p>
+							<p class="over__record">Рекорд: <span id="record_2">0</span></p>
+							<a class="over__again" href="javascript:game.start()">Пробовать снова!</a>
 						</div>
 					</div>
 
 					<div class="gamewin" id="gamewin">
 						<div class="win" id="win">
-							<p class="win__text">YOU WIN!!!</p>
-							<p class="win__score">SCORE: <span id="score_3">0</span></p>
+							<p class="win__text">ВЫ ВЫИГРАЛИ!!!</p>
+							<p class="win__score">Счет: <span id="score_3">0</span></p>
 							<p class="win__time" id="winTime"></p>
-							<p class="win__record">RECORD:<span id="record_3">0</span></p>
-							<a class="win__again" href="javascript:game.start()">Try Again!</a>
+							<p class="win__record">Рекорд: <span id="record_3">0</span></p>
+							<a class="win__again" href="javascript:game.start()">Пробовать снова!</a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="table">
-				<div class="table__title">Best time</div>
+				<div class="table__title">Лучшее время</div>
 				<ul class="table__body">
 
 				</ul>
 			</div>
-
-
 		</main>
 	</div>
-
 	<script src="main.js"></script>
 </body>
 

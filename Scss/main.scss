@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap");
 body {
 	background-color: #faf8ef;
 }
@@ -15,7 +18,8 @@ main {
 
 .header {
 	width: 500px;
-	margin: 0 0 0 15px;
+	margin: 0 0 0 20px;
+	font-family: "Lato", sans-serif;
 
 	&__container {
 		display: flex;
@@ -23,16 +27,17 @@ main {
 	}
 
 	&__title {
+		font-weight: 600;
 		font-size: 60px;
 		color: #93c;
 	}
 	&__sub-title {
-		text-align: center;
+		text-align: left;
 		font-size: 20px;
-		margin-left: -170px;
 		padding: 10px 0;
 		span {
 			color: #93c;
+			font-weight: 600;
 		}
 	}
 	&__tabl {
@@ -62,6 +67,7 @@ main {
 	background-color: #bbada0;
 	border-radius: 15px;
 	position: relative;
+	touch-action: none;
 }
 .cell {
 	width: 80px;
@@ -70,11 +76,19 @@ main {
 	border-radius: 5px;
 	background-color: #ccc0b3;
 	float: left;
-	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	line-height: 80px;
 	pointer-events: none;
+	font-size: 40px;
+	font-weight: bold;
+	color: #fff;
+	font-family: "Lato", sans-serif;
 }
+
 .gameover {
+	font-family: "Lato", cursive;
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -82,6 +96,7 @@ main {
 	right: 0;
 	background-color: #f1af9c;
 	transition: all 2s;
+	border-radius: 15px;
 	opacity: 0;
 	pointer-events: none;
 }
@@ -128,9 +143,11 @@ main {
 	background-color: #f1af9c;
 	transition: all 2s;
 	opacity: 0;
+	border-radius: 15px;
 	pointer-events: none;
 }
 .win {
+	font-family: "Lato", cursive;
 	color: #fafad2;
 	width: 300px;
 	position: absolute;
@@ -144,15 +161,19 @@ main {
 
 	&__text {
 		font-size: 30px;
+		
 	}
 
 	&__score {
 		font-size: 23px;
+		line-height: 0;
 	}
 	&__time {
 		font-size: 23px;
 		span {
 			color: red;
+			font-family: "Caveat", cursive;
+			font-size: 26px;
 		}
 	}
 
@@ -180,15 +201,17 @@ main {
 	&__title {
 		text-align: center;
 		font-size: 25px;
+		font-family: "Oswald", sans-serif;
 	}
 
 	&__body {
 		height: 400px;
 		overflow-y: auto;
 		overflow-x: hidden;
-		font-size: 23px;
+		font-size: 30px;
 		li {
 			list-style-type: none;
+			font-family: "Caveat", cursive;
 		}
 	}
 }
@@ -226,12 +249,12 @@ main {
 }
 .n1024 {
 	background-color: #33b5e5;
-	font-size: 30px;
+	font-size: 32px;
 	color: #fff;
 }
 .n2048 {
 	background-color: #09c;
-	font-size: 30px;
+	font-size: 32px;
 	color: #fff;
 }
 /*.n4096 {

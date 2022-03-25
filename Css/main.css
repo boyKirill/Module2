@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap");
 body {
   background-color: #faf8ef;
 }
@@ -19,7 +22,8 @@ main {
 
 .header {
   width: 500px;
-  margin: 0 0 0 15px;
+  margin: 0 0 0 20px;
+  font-family: "Lato", sans-serif;
 }
 
 .header__container {
@@ -32,19 +36,20 @@ main {
 }
 
 .header__title {
+  font-weight: 600;
   font-size: 60px;
   color: #93c;
 }
 
 .header__sub-title {
-  text-align: center;
+  text-align: left;
   font-size: 20px;
-  margin-left: -170px;
   padding: 10px 0;
 }
 
 .header__sub-title span {
   color: #93c;
+  font-weight: 600;
 }
 
 .header__tabl {
@@ -80,6 +85,8 @@ main {
   background-color: #bbada0;
   border-radius: 15px;
   position: relative;
+  -ms-touch-action: none;
+      touch-action: none;
 }
 
 .cell {
@@ -89,12 +96,25 @@ main {
   border-radius: 5px;
   background-color: #ccc0b3;
   float: left;
-  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   line-height: 80px;
   pointer-events: none;
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  font-family: "Lato", sans-serif;
 }
 
 .gameover {
+  font-family: "Lato", cursive;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -103,6 +123,7 @@ main {
   background-color: #f1af9c;
   -webkit-transition: all 2s;
   transition: all 2s;
+  border-radius: 15px;
   opacity: 0;
   pointer-events: none;
 }
@@ -153,10 +174,12 @@ main {
   -webkit-transition: all 2s;
   transition: all 2s;
   opacity: 0;
+  border-radius: 15px;
   pointer-events: none;
 }
 
 .win {
+  font-family: "Lato", cursive;
   color: #fafad2;
   width: 300px;
   position: absolute;
@@ -176,6 +199,7 @@ main {
 
 .win__score {
   font-size: 23px;
+  line-height: 0;
 }
 
 .win__time {
@@ -184,6 +208,8 @@ main {
 
 .win__time span {
   color: red;
+  font-family: "Caveat", cursive;
+  font-size: 26px;
 }
 
 .win__record {
@@ -211,17 +237,19 @@ main {
 .table__title {
   text-align: center;
   font-size: 25px;
+  font-family: "Oswald", sans-serif;
 }
 
 .table__body {
   height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
-  font-size: 23px;
+  font-size: 30px;
 }
 
 .table__body li {
   list-style-type: none;
+  font-family: "Caveat", cursive;
 }
 
 .n2 {
@@ -264,13 +292,13 @@ main {
 
 .n1024 {
   background-color: #33b5e5;
-  font-size: 30px;
+  font-size: 32px;
   color: #fff;
 }
 
 .n2048 {
   background-color: #09c;
-  font-size: 30px;
+  font-size: 32px;
   color: #fff;
 }
 
