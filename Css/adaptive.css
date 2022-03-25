@@ -1,9 +1,13 @@
 @media screen and (max-width: 846px) {
   .table {
+    margin: 90px 15px 30px 15px;
     width: 500px;
   }
+  .table__title {
+    padding: 10px 0;
+  }
   .table__body {
-    padding: 0;
+    padding: 10px 0;
     -webkit-box-shadow: 0 0 12px -6px #000000 inset;
             box-shadow: 0 0 12px -6px #000000 inset;
     height: 200px;
@@ -22,7 +26,7 @@
     height: 65.5px;
   }
   .over {
-    width: 300px;
+    width: 350px;
   }
   .header {
     width: 400px;
@@ -83,7 +87,7 @@
   }
   .over {
     width: 300px;
-    padding: 35px 0;
+    padding: 74px 0;
     border-radius: 14px;
   }
   .over__text {
@@ -99,7 +103,8 @@
     font-size: 23px;
   }
   .win {
-    padding: 34px 0;
+    width: 300px;
+    padding: 56px 0;
     border-radius: 16px;
   }
   .win__text {
@@ -160,7 +165,7 @@
   }
   .over {
     width: 250px;
-    padding: 21px 0;
+    padding: 53px 0;
     border-radius: 14px;
   }
   .over__text {
@@ -177,7 +182,7 @@
   }
   .win {
     width: 250px;
-    padding: 18px 0;
+    padding: 45px 0;
     border-radius: 16px;
   }
   .win__text {

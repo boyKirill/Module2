@@ -18,8 +18,6 @@ let game = {
 		this.status = this.gamerunning;
 		this.mydata = [];
 
-
-
 		for (let r = 0; r < 5; r++) {
 			this.data[r] = [];
 
@@ -28,13 +26,10 @@ let game = {
 			}
 		}
 
-
-		//console.log(this.data);
 		this.randomNum();
 		this.randomNum();
 
 		this.dataView();
-		//console.log(this.data);
 	},
 
 	randomNum: function () {
@@ -54,6 +49,7 @@ let game = {
 		for (let r = 0; r < 5; r++) {
 			for (let c = 0; c < 5; c++) {
 				var div = document.getElementById('c' + r + c);
+
 				if (this.data[r][c] == 0) {
 					div.innerHTML = '';
 					div.className = 'cell';
@@ -75,13 +71,11 @@ let game = {
 				document.getElementById('record_1').innerHTML = this.record;
 				document.getElementById('record_3').innerHTML = this.record;
 			}
-			//document.getElementById('gamewin').style.display = 'block';
+
 			document.getElementById('gamewin').style.opacity = '0.7';
 			document.getElementById('gamewin').style.pointerEvents = 'auto';
-
 		}
 		else {
-			//document.getElementById('gamewin').style.display = 'none';
 			document.getElementById('gamewin').style.opacity = '0';
 			document.getElementById('gamewin').style.pointerEvents = 'none';
 		}
@@ -89,21 +83,16 @@ let game = {
 		if (this.status == this.gameover) {
 			document.getElementById('score_2').innerHTML = this.score;
 
-
-
 			if (this.score > this.record) {
 				this.record = this.score;
 				document.getElementById('record_1').innerHTML = this.record;
 				document.getElementById('record_2').innerHTML = this.record;
 			}
 
-			//document.getElementById('gameover').style.display = 'block';
 			document.getElementById('gameover').style.opacity = '0.7';
 			document.getElementById('gameover').style.pointerEvents = 'auto';
-			//document.getElementById('over').style.opacity = '1';
 		}
 		else {
-			//document.getElementById('gameover').style.display = 'none';
 			document.getElementById('gameover').style.opacity = '0';
 			document.getElementById('gameover').style.pointerEvents = 'none';
 		}
@@ -157,7 +146,7 @@ let game = {
 	isGameWin: function () {
 		for (var r = 0; r < 5; r++) {
 			for (var c = 0; c < 5; c++) {
-				if (this.data[r][c] == 8) {
+				if (this.data[r][c] == 2048) {
 					this.gamewin = 1;
 					this.endTime = new Date();
 					return this.gamewin;
@@ -193,14 +182,12 @@ let game = {
 	//перемещение влево
 	moveLeft: function () {
 		var before = String(this.data);
-		//console.log(before);
 
 		for (let r = 0; r < 5; r++) {
 			this.moveLeftInRow(r);
 		}
 
 		var after = String(this.data);
-		//console.log(after);
 
 		if (before != after) {
 			this.randomNum();
@@ -214,7 +201,7 @@ let game = {
 	moveLeftInRow: function (r) {
 		for (let c = 0; c < 4; c++) {
 			var nextc = this.leftGetNextInRow(r, c);
-			//console.log(nextc);
+
 			if (nextc != -1) {
 				if (this.data[r][c] == 0) {
 					this.data[r][c] = this.data[r][nextc];
@@ -390,8 +377,6 @@ let game = {
 		}
 		return -1;
 	}
-
-
 }
 
 game.start();
@@ -422,14 +407,14 @@ document.onkeydown = function (event) {
 }
 
 
-var startX, startY, endX, endY;    // Определение четырех переменных для хранения значений по оси X и оси Y при касании и при выходе из касания
-document.querySelector(".container").addEventListener("touchstart", function (event) {  // Связывание события слушателя при начале касания пальцем
+var startX, startY, endX, endY;
+document.querySelector(".container").addEventListener("touchstart", function (event) {
 	var event = event || e || arguments[0];
 	startX = event.touches[0].pageX;
 	startY = event.touches[0].pageY;
 })
 
-document.querySelector(".container").addEventListener("touchend", function (event) {    // Привязка события прослушивания, когда палец касается и уходит
+document.querySelector(".container").addEventListener("touchend", function (event) {
 	var event = event || e || arguments[0];
 	endX = event.changedTouches[0].pageX;
 	endY = event.changedTouches[0].pageY;

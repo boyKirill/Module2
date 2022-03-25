@@ -14,6 +14,7 @@ main {
           justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  padding: 30px;
 }
 
 .wrapper {
@@ -22,7 +23,7 @@ main {
 
 .header {
   width: 500px;
-  margin: 0 0 0 20px;
+  margin: 10px 0 0 20px;
   font-family: "Lato", sans-serif;
 }
 
@@ -130,7 +131,7 @@ main {
 
 .over {
   color: #fafad2;
-  width: 300px;
+  width: 400px;
   position: absolute;
   background-color: #000;
   text-align: center;
@@ -140,6 +141,10 @@ main {
           transform: translate(-50%, -50%);
   border-radius: 10px;
   padding: 30px;
+}
+
+.over p {
+  padding: 0 0 20px 0;
 }
 
 .over__text {
@@ -181,7 +186,7 @@ main {
 .win {
   font-family: "Lato", cursive;
   color: #fafad2;
-  width: 300px;
+  width: 400px;
   position: absolute;
   background-color: #000;
   text-align: center;
@@ -193,13 +198,16 @@ main {
   padding: 30px;
 }
 
+.win p {
+  padding: 0 0 20px 0;
+}
+
 .win__text {
   font-size: 30px;
 }
 
 .win__score {
   font-size: 23px;
-  line-height: 0;
 }
 
 .win__time {

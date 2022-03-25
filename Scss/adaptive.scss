@@ -1,9 +1,13 @@
 @media screen and (max-width: 846px) {
 	.table {
+		margin: 90px 15px 30px 15px;
 		width: 500px;
+		&__title {
+			padding: 10px 0;
+		}
 
 		&__body {
-			padding: 0;
+			padding: 10px 0;
 			box-shadow: 0 0 12px -6px #000000 inset;
 			height: 200px;
 			text-align: center;
@@ -23,7 +27,7 @@
 		height: 65.5px;
 	}
 	.over {
-		width: 300px;
+		width: 350px;
 	}
 	.header {
 		width: 400px;
@@ -79,7 +83,7 @@
 
 	.over {
 		width: 300px;
-		padding: 35px 0;
+		padding: 74px 0;
 		border-radius: 14px;
 		&__text {
 			font-size: 26px;
@@ -99,7 +103,8 @@
 	}
 
 	.win {
-		padding: 34px 0;
+		width: 300px;
+		padding: 56px 0;
 		border-radius: 16px;
 		&__text {
 			font-size: 25px;
@@ -170,7 +175,7 @@
 
 	.over {
 		width: 250px;
-		padding: 21px 0;
+		padding: 53px 0;
 		border-radius: 14px;
 		&__text {
 			font-size: 23px;
@@ -191,7 +196,7 @@
 
 	.win {
 		width: 250px;
-		padding: 18px 0;
+		padding: 45px 0;
 		border-radius: 16px;
 		&__text {
 			line-height: 20px;
