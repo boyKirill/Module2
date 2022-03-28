@@ -10,6 +10,8 @@ let game = {
 	endTime: 0,
 	Time: 0,
 	timeStapsArr: [],
+	gR:undefined,
+	gC:undefined,
 	start: function () {
 		console.log(this.timeStapsArr);
 		this.startTime = new Date();
@@ -26,19 +28,25 @@ let game = {
 			}
 		}
 
+		
 		this.randomNum();
 		this.randomNum();
-
-		this.dataView();
+		//держим обновление, чтоб сработала анимация на обоих 
+		setTimeout(() => { this.dataView(); }, 300);
 	},
 
 	randomNum: function () {
 		for (; ;) {
-			let r = Math.floor(Math.random() * 5);
-			let c = Math.floor(Math.random() * 5);
-			if (this.data[r][c] == 0) {
+			
+			this.gR = Math.floor(Math.random() * 5);
+			this.gC = Math.floor(Math.random() * 5);
+			var div = document.getElementById('c' + this.gR + this.gC);
+			if (this.data[this.gR][this.gC] == 0) {
 				var num = Math.random() > 0.1 ? 2 : 4;
-				this.data[r][c] = num;
+				this.data[this.gR][this.gC] = num;
+				//для анимации двойного появления
+				div.innerHTML = this.data[this.gR][this.gC];
+				div.className = 'cell appearance n' + this.data[this.gR][this.gC];
 				break;
 			}
 		}
@@ -54,8 +62,13 @@ let game = {
 					div.innerHTML = '';
 					div.className = 'cell';
 				} else {
-					div.innerHTML = this.data[r][c];
-					div.className = 'cell n' + this.data[r][c];
+					if((r == this.gR) && (c == this.gC)){//для анимации последующих появлений
+						div.innerHTML = this.data[r][c];
+						div.className = 'cell appearance n' + this.data[r][c];
+					}else{
+						div.innerHTML = this.data[r][c];
+						div.className = 'cell n' + this.data[r][c];
+					}
 				}
 			}
 		}
