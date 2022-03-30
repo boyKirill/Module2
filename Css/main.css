@@ -80,6 +80,16 @@ main {
 }
 
 .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   margin: 0 15px;
   width: 500px;
   height: 500px;
@@ -88,12 +98,33 @@ main {
   position: relative;
   -ms-touch-action: none;
       touch-action: none;
+  -webkit-transition: .5s;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.container:target {
+  cursor: move;
+}
+
+.container .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.active-cell {
+  position: absolute;
+  -webkit-animation: active-cell 0.3s linear 1;
+          animation: active-cell 0.3s linear 1;
 }
 
 .cell {
   width: 80px;
   height: 80px;
-  margin: 16px 0px 0px 16px;
   border-radius: 5px;
   background-color: #ccc0b3;
   float: left;
@@ -112,14 +143,11 @@ main {
   font-weight: bold;
   color: #fff;
   font-family: "Lato", sans-serif;
+  -webkit-transition: .2s;
+  transition: .2s;
 }
 
-.appearance {
-  -webkit-animation: appearance 0.3s linear 1;
-          animation: appearance 0.3s linear 1;
-}
-
-@-webkit-keyframes appearance {
+@-webkit-keyframes active-cell {
   0% {
     -webkit-transform: scale(0);
             transform: scale(0);
@@ -134,7 +162,7 @@ main {
   }
 }
 
-@keyframes appearance {
+@keyframes active-cell {
   0% {
     -webkit-transform: scale(0);
             transform: scale(0);
@@ -150,6 +178,7 @@ main {
 }
 
 .gameover {
+  display: none;
   font-family: "Lato", cursive;
   position: absolute;
   top: 0;
@@ -162,6 +191,7 @@ main {
   border-radius: 15px;
   opacity: 0;
   pointer-events: none;
+  z-index: 1000;
 }
 
 .over {
@@ -205,6 +235,7 @@ main {
 }
 
 .gamewin {
+  display: none;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -216,6 +247,7 @@ main {
   opacity: 0;
   border-radius: 15px;
   pointer-events: none;
+  z-index: 1000;
 }
 
 .win {
