@@ -98,8 +98,8 @@ main {
   position: relative;
   -ms-touch-action: none;
       touch-action: none;
-  -webkit-transition: .5s;
-  transition: .5s;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
   cursor: pointer;
 }
 
@@ -120,6 +120,11 @@ main {
   position: absolute;
   -webkit-animation: active-cell 0.3s linear 1;
           animation: active-cell 0.3s linear 1;
+}
+
+.swoop {
+  -webkit-animation: swoop 0.2s linear 1;
+          animation: swoop 0.2s linear 1;
 }
 
 .cell {
@@ -152,10 +157,6 @@ main {
     -webkit-transform: scale(0);
             transform: scale(0);
   }
-  50% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
-  }
   100% {
     -webkit-transform: scale(1);
             transform: scale(1);
@@ -167,9 +168,35 @@ main {
     -webkit-transform: scale(0);
             transform: scale(0);
   }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@-webkit-keyframes swoop {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
   50% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes swoop {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
   }
   100% {
     -webkit-transform: scale(1);

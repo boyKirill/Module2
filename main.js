@@ -15,417 +15,453 @@ let game = {
 	gC: undefined,
 
 	start: function () {
-		 this.startTime = Date.now();
-		 this.score = 0;
-		 this.state = GameState.RUNNING;
+		this.startTime = Date.now();
+		this.score = 0;
+		this.state = GameState.RUNNING;
 
-		 let activeCells = document.querySelectorAll('.active-cell');
+		let activeCells = document.querySelectorAll('.active-cell');
 
-		 for (const activeCell of activeCells) {
-			  activeCell.remove();
-		 }
+		for (const activeCell of activeCells) {
+			activeCell.remove();
+		}
 
-		 for (let r = 0; r < 5; r++) {
-			  this.data[r] = [];
+		for (let r = 0; r < 5; r++) {
+			this.data[r] = [];
 
-			  for (let c = 0; c < 5; c++) {
-					this.data[r][c] = 0;
-			  }
-		 }
+			for (let c = 0; c < 5; c++) {
+				this.data[r][c] = 0;
+			}
+		}
 
-		 this.dataView();
-		 this.randomNum();
-		 this.randomNum();
+		this.dataView();
+		this.randomNum();
+		this.randomNum();
 	},
 
 	randomNum: function () {
-		 while (true) {
+		while (true) {
 
-			  this.gR = Math.floor(Math.random() * 5);
-			  this.gC = Math.floor(Math.random() * 5);
+			this.gR = Math.floor(Math.random() * 5);
+			this.gC = Math.floor(Math.random() * 5);
 
-			  let div = document.getElementById('c' + this.gR + this.gC);
+			let div = document.getElementById('c' + this.gR + this.gC);
 
-			  if (this.data[this.gR][this.gC] === 0) {
-					this.data[this.gR][this.gC] = Math.random() > 0.1 ? 2 : 4;
+			if (this.data[this.gR][this.gC] === 0) {
+				this.data[this.gR][this.gC] = Math.random() > 0.1 ? 2 : 4;
 
-					this.addActiveCell(div);
+				this.addActiveCell(div);
 
-					break;
-			  }
-		 }
+				break;
+			}
+		}
 	},
 
 	addActiveCell: function (currentCell) {
-		 const activeCell = document.createElement("div");
+		const activeCell = document.createElement("div");
 
-		 activeCell.classList.add('active-cell', 'cell', 'n' + this.data[this.gR][this.gC]);
-		 activeCell.id = 'v' + this.gR + this.gC;
-		 activeCell.innerHTML = this.data[this.gR][this.gC];
+		activeCell.classList.add('active-cell', 'cell', 'n' + this.data[this.gR][this.gC]);
+		activeCell.id = 'v' + this.gR + this.gC;
+		activeCell.innerHTML = this.data[this.gR][this.gC];
 
-		 activeCell.style.left = currentCell.offsetLeft + 'px';
-		 activeCell.style.top = currentCell.offsetTop + 'px';
+		activeCell.style.left = currentCell.offsetLeft + 'px';
+		activeCell.style.top = currentCell.offsetTop + 'px';
 
-		 game.container.appendChild(activeCell);
+		game.container.appendChild(activeCell);
+	},
+
+	resize: function () {
+		window.addEventListener("resize", function () {
+			let activeCells = document.querySelectorAll('.active-cell');
+
+			function newCor(activeCells) {
+				for (let item of activeCells) {
+					let idItem = item.id;
+					let r = idItem[1];
+					let c = idItem[2];
+					coordinateCell = document.getElementById('c' + r + c);
+					item.style.left = coordinateCell.offsetLeft + 'px';
+					item.style.top = coordinateCell.offsetTop + 'px';
+				}
+			}
+
+			if (window.matchMedia("(max-width: 320px)").matches) {
+				newCor(activeCells);
+
+			} else if (window.matchMedia("(max-width: 360px)").matches) {
+				newCor(activeCells);
+			}
+			else if (window.matchMedia("(max-width: 460px)").matches) {
+				newCor(activeCells);
+			}
+			else if (window.matchMedia("(max-width: 846px)").matches) {
+				newCor(activeCells);
+			}
+			else if (window.matchMedia("(min-width: 846px)").matches) {
+				newCor(activeCells);
+			}
+		})
+
 	},
 
 	dataView: function () {
-		 const gamewinBlock = document.getElementById('gamewin');
-		 const gameoverBlock = document.getElementById('gameover');
+		this.resize();
 
-		 document.getElementById('score_1').innerHTML = this.score;
+		const gamewinBlock = document.getElementById('gamewin');
+		const gameoverBlock = document.getElementById('gameover');
 
-		 if (this.isGameWin()) {
-			  this.secundomer();
-			  document.getElementById('score_3').innerHTML = this.score;
+		document.getElementById('score_1').innerHTML = this.score;
 
-			  if (this.score > this.record) {
-					this.record = this.score;
-					document.getElementById('record_1').innerHTML = this.record;
-					document.getElementById('record_3').innerHTML = this.record;
-			  }
+		if (this.isGameWin()) {
+			this.secundomer();
+			document.getElementById('score_3').innerHTML = this.score;
 
-			  gamewinBlock.style.display = 'block';
-			  gamewinBlock.style.opacity = '0.7';
-			  gamewinBlock.style.pointerEvents = 'auto';
-		 } else {
-			  gamewinBlock.style.opacity = '0';
-			  gamewinBlock.style.pointerEvents = 'none';
-		 }
+			if (this.score > this.record) {
+				this.record = this.score;
+				document.getElementById('record_1').innerHTML = this.record;
+				document.getElementById('record_3').innerHTML = this.record;
+			}
 
-		 if (game.isGameOver()) {
-			  document.getElementById('score_2').innerHTML = this.score;
+			gamewinBlock.style.display = 'block';
+			gamewinBlock.style.opacity = '0.7';
+			gamewinBlock.style.pointerEvents = 'auto';
+		} else {
+			gamewinBlock.style.opacity = '0';
+			gamewinBlock.style.pointerEvents = 'none';
+		}
 
-			  if (this.score > this.record) {
-					this.record = this.score;
-					document.getElementById('record_1').innerHTML = this.record;
-					document.getElementById('record_2').innerHTML = this.record;
-			  }
+		if (game.isGameOver()) {
+			document.getElementById('score_2').innerHTML = this.score;
 
-			  gameoverBlock.style.display = 'block';
-			  gameoverBlock.style.opacity = '0.7';
-			  gameoverBlock.style.pointerEvents = 'auto';
-		 } else {
-			  gameoverBlock.style.opacity = '0';
-			  gameoverBlock.style.pointerEvents = 'none';
-		 }
+			if (this.score > this.record) {
+				this.record = this.score;
+				document.getElementById('record_1').innerHTML = this.record;
+				document.getElementById('record_2').innerHTML = this.record;
+			}
+
+			gameoverBlock.style.display = 'block';
+			gameoverBlock.style.opacity = '0.7';
+			gameoverBlock.style.pointerEvents = 'auto';
+		} else {
+			gameoverBlock.style.opacity = '0';
+			gameoverBlock.style.pointerEvents = 'none';
+		}
 	},
 
 	secundomer: function () {
-		 const pastTime = Date.now() - this.startTime;
+		const pastTime = Date.now() - this.startTime;
 
-		 this.timeStampsArr.push(pastTime); // пушим в массив
+		this.timeStampsArr.push(pastTime); // пушим в массив
 
-		 let m = Math.floor(pastTime / 1000 / 60);
+		let m = Math.floor(pastTime / 1000 / 60);
 
-		 let s = Math.floor(pastTime / 1000 % 60);
+		let s = Math.floor(pastTime / 1000 % 60);
 
-		 document.getElementById('winTime').innerHTML = `Время: <span>${m}мин. ${s}сек.</span>`;
+		document.getElementById('winTime').innerHTML = `Время: <span>${m}мин. ${s}сек.</span>`;
 
-		 // сортируем массив от меньшего количества миллисекунд к большему
-		 this.timeStampsArr.sort(function (a, b) {
-			  return a - b;
-		 });
+		// сортируем массив от меньшего количества миллисекунд к большему
+		this.timeStampsArr.sort(function (a, b) {
+			return a - b;
+		});
 
-		 // чистим нашу таблицу
-		 document.querySelector('.table__body').innerHTML = "";
+		// чистим нашу таблицу
+		document.querySelector('.table__body').innerHTML = "";
 
-		 for (let time of this.timeStampsArr) {
-			  let m = Math.floor(time / 1000 / 60);
-			  let s = Math.floor(time / 1000 % 60);
+		for (let time of this.timeStampsArr) {
+			let m = Math.floor(time / 1000 / 60);
+			let s = Math.floor(time / 1000 % 60);
 
-			  const li = document.createElement('li');
-			  li.textContent = `${m}мин. ${s}сек.`;
+			const li = document.createElement('li');
+			li.textContent = `${m}мин. ${s}сек.`;
 
-			  document.querySelector('.table__body').appendChild(li);
-		 }
+			document.querySelector('.table__body').appendChild(li);
+		}
 	},
 
 	isGameWin: function () {
-		 for (let r = 0; r < 5; r++) {
-			  for (let c = 0; c < 5; c++) {
-					if (this.data[r][c] === 2048) {
-						 return true;
-					}
-			  }
-		 }
+		for (let r = 0; r < 5; r++) {
+			for (let c = 0; c < 5; c++) {
+				if (this.data[r][c] === 2048) {
+					return true;
+				}
+			}
+		}
 	},
 
 	isGameOver: function () {
-		 for (let r = 0; r < 5; r++) {
-			  for (let c = 0; c < 5; c++) {
-					if (this.data[r][c] === 0) {
-						 return false;
+		for (let r = 0; r < 5; r++) {
+			for (let c = 0; c < 5; c++) {
+				if (this.data[r][c] === 0) {
+					return false;
+				}
+
+				if (c < 4) {
+					if (this.data[r][c] === this.data[r][c + 1]) {
+						return false;
 					}
+				}
 
-					if (c < 4) {
-						 if (this.data[r][c] === this.data[r][c + 1]) {
-							  return false;
-						 }
+				if (r < 4) {
+					if (this.data[r][c] === this.data[r + 1][c]) {
+						return false;
 					}
+				}
+			}
+		}
 
-					if (r < 4) {
-						 if (this.data[r][c] === this.data[r + 1][c]) {
-							  return false;
-						 }
-					}
-			  }
-		 }
+		game.state = GameState.NOT_RUNNING;
 
-		 game.state = GameState.NOT_RUNNING;
-
-		 return true;
+		return true;
 	},
 
 	moveLeft: function () {
-		 let random = {}
+		let random = {}
 
-		 random.executed = false;
+		random.executed = false;
 
-		 for (let r = 0; r < 5; r++) {
-			  this.moveLeftInRow(r, random);
-		 }
+		for (let r = 0; r < 5; r++) {
+			this.moveLeftInRow(r, random);
+		}
 
-		 this.dataView();
+		this.dataView();
 	},
 
 	moveLeftInRow: function (r, random) {
-		 for (let c = 0; c < 4; c++) {
-			  let nextc = this.leftGetNextInRow(r, c);
+		for (let c = 0; c < 4; c++) {
+			let nextc = this.leftGetNextInRow(r, c);
 
-			  if (nextc !== -1) {
-					let activeCell = document.getElementById('v' + r + nextc),
-						 goalCell = document.getElementById('v' + r + c),
-						 coordinateCell = document.getElementById('c' + r + c);
+			if (nextc !== -1) {
+				let activeCell = document.getElementById('v' + r + nextc),
+					goalCell = document.getElementById('v' + r + c),
+					coordinateCell = document.getElementById('c' + r + c);
 
-					if (this.data[r][c] === 0) {
-						 this.data[r][c] = this.data[r][nextc];
-						 this.data[r][nextc] = 0;
+				if (this.data[r][c] === 0) {
+					this.data[r][c] = this.data[r][nextc];
+					this.data[r][nextc] = 0;
 
-						 activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
+					activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
 
-						 activeCell.style.left = coordinateCell.offsetLeft + 'px';
-						 activeCell.style.top = coordinateCell.offsetTop + 'px';
+					activeCell.style.left = coordinateCell.offsetLeft + 'px';
+					activeCell.style.top = coordinateCell.offsetTop + 'px';
 
-						 activeCell.id = 'v' + r + c;
+					activeCell.id = 'v' + r + c;
 
-						 c--;
-					} else if (this.data[r][c] === this.data[r][nextc]) {
-						 this.data[r][c] *= 2;
+					c--;
+				} else if (this.data[r][c] === this.data[r][nextc]) {
+					this.data[r][c] *= 2;
 
-						 this.data[r][nextc] = 0;
-						 this.score += this.data[r][c];
+					this.data[r][nextc] = 0;
+					this.score += this.data[r][c];
 
-						 activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
+					activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
 
-						 activeCell.style.left = coordinateCell.offsetLeft + 'px';
-						 activeCell.style.top = coordinateCell.offsetTop + 'px';
-					}
-			  } else {
-					break;
-			  }
-		 }
+					activeCell.style.left = coordinateCell.offsetLeft + 'px';
+					activeCell.style.top = coordinateCell.offsetTop + 'px';
+				}
+			} else {
+				break;
+			}
+		}
 	},
 
 	leftGetNextInRow: function (r, c) {
-		 for (let i = c + 1; i < 5; i++) {
-			  if (this.data[r][i] !== 0) {
-					return i;
-			  }
-		 }
-		 return -1;
+		for (let i = c + 1; i < 5; i++) {
+			if (this.data[r][i] !== 0) {
+				return i;
+			}
+		}
+		return -1;
 	},
 
 	moveRight: function () {
-		 let random = {}
-		 random.executed = false;
+		let random = {}
+		random.executed = false;
 
-		 for (let r = 0; r < 5; r++) {
-			  this.moveRightInRow(r, random);
-		 }
+		for (let r = 0; r < 5; r++) {
+			this.moveRightInRow(r, random);
+		}
 
-		 this.dataView();
+		this.dataView();
 	},
 
 	moveRightInRow: function (r, random) {
-		 for (let c = 4; c > 0; c--) {
-			  let nextc = this.rightGetNextInRow(r, c);
+		for (let c = 4; c > 0; c--) {
+			let nextc = this.rightGetNextInRow(r, c);
 
-			  if (nextc !== -1) {
-					let activeCell = document.getElementById('v' + r + nextc),
-						 goalCell = document.getElementById('v' + r + c),
-						 coordinateCell = document.getElementById('c' + r + c);
+			if (nextc !== -1) {
+				let activeCell = document.getElementById('v' + r + nextc),
+					goalCell = document.getElementById('v' + r + c),
+					coordinateCell = document.getElementById('c' + r + c);
 
-					if (this.data[r][c] === 0) {
-						 this.data[r][c] = this.data[r][nextc];
-						 this.data[r][nextc] = 0;
+				if (this.data[r][c] === 0) {
+					this.data[r][c] = this.data[r][nextc];
+					this.data[r][nextc] = 0;
 
-						 activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
+					activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
 
-						 activeCell.style.left = coordinateCell.offsetLeft + 'px';
-						 activeCell.style.top = coordinateCell.offsetTop + 'px';
+					activeCell.style.left = coordinateCell.offsetLeft + 'px';
+					activeCell.style.top = coordinateCell.offsetTop + 'px';
 
-						 activeCell.id = 'v' + r + c;
+					activeCell.id = 'v' + r + c;
 
-						 c++;
-					} else if (this.data[r][c] === this.data[r][nextc]) {
-						 this.data[r][c] *= 2;
-						 this.data[r][nextc] = 0;
-						 this.score += this.data[r][c];
+					c++;
+				} else if (this.data[r][c] === this.data[r][nextc]) {
+					this.data[r][c] *= 2;
+					this.data[r][nextc] = 0;
+					this.score += this.data[r][c];
 
-						 activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
+					activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
 
-						 activeCell.style.left = coordinateCell.offsetLeft + 'px';
-						 activeCell.style.top = coordinateCell.offsetTop + 'px';
-					}
-			  } else {
-					break;
-			  }
-		 }
+					activeCell.style.left = coordinateCell.offsetLeft + 'px';
+					activeCell.style.top = coordinateCell.offsetTop + 'px';
+				}
+			} else {
+				break;
+			}
+		}
 	},
 
 	rightGetNextInRow: function (r, c) {
-		 for (let i = c - 1; i >= 0; i--) {
-			  if (this.data[r][i] !== 0) {
-					return i;
-			  }
-		 }
-		 return -1;
+		for (let i = c - 1; i >= 0; i--) {
+			if (this.data[r][i] !== 0) {
+				return i;
+			}
+		}
+		return -1;
 	},
 
 	moveTop: function () {
-		 let random = {}
-		 random.executed = false;
+		let random = {}
+		random.executed = false;
 
-		 for (let c = 0; c < 5; c++) {
-			  this.moveTopInRow(c, random);
-		 }
+		for (let c = 0; c < 5; c++) {
+			this.moveTopInRow(c, random);
+		}
 
-		 this.dataView();
+		this.dataView();
 	},
 
 	moveTopInRow: function (c, random) {
-		 for (let r = 0; r < 4; r++) {
-			  let nextr = this.topGetNextInRow(c, r);
+		for (let r = 0; r < 4; r++) {
+			let nextr = this.topGetNextInRow(c, r);
 
-			  if (nextr !== -1) {
-					let activeCell = document.getElementById('v' + nextr + c),
-						 goalCell = document.getElementById('v' + r + c),
-						 coordinateCell = document.getElementById('c' + r + c);
+			if (nextr !== -1) {
+				let activeCell = document.getElementById('v' + nextr + c),
+					goalCell = document.getElementById('v' + r + c),
+					coordinateCell = document.getElementById('c' + r + c);
 
-					if (this.data[r][c] === 0) {
-						 this.data[r][c] = this.data[nextr][c];
-						 this.data[nextr][c] = 0;
+				if (this.data[r][c] === 0) {
+					this.data[r][c] = this.data[nextr][c];
+					this.data[nextr][c] = 0;
 
-						 activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
+					activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
 
-						 activeCell.style.left = coordinateCell.offsetLeft + 'px';
-						 activeCell.style.top = coordinateCell.offsetTop + 'px';
+					activeCell.style.left = coordinateCell.offsetLeft + 'px';
+					activeCell.style.top = coordinateCell.offsetTop + 'px';
 
-						 activeCell.id = 'v' + r + c;
+					activeCell.id = 'v' + r + c;
 
-						 r--;
-					} else if (this.data[r][c] === this.data[nextr][c]) {
-						 this.data[r][c] *= 2;
-						 this.data[nextr][c] = 0;
-						 this.score += this.data[r][c];
+					r--;
+				} else if (this.data[r][c] === this.data[nextr][c]) {
+					this.data[r][c] *= 2;
+					this.data[nextr][c] = 0;
+					this.score += this.data[r][c];
 
-						 activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
+					activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
 
-						 activeCell.style.left = coordinateCell.offsetLeft + 'px';
-						 activeCell.style.top = coordinateCell.offsetTop + 'px';
-					}
-			  } else {
-					break;
-			  }
-		 }
+					activeCell.style.left = coordinateCell.offsetLeft + 'px';
+					activeCell.style.top = coordinateCell.offsetTop + 'px';
+				}
+			} else {
+				break;
+			}
+		}
 	},
 
 	topGetNextInRow: function (c, r) {
-		 for (let i = r + 1; i < 5; i++) {
-			  if (this.data[i][c] !== 0) {
-					return i;
-			  }
-		 }
-		 return -1;
+		for (let i = r + 1; i < 5; i++) {
+			if (this.data[i][c] !== 0) {
+				return i;
+			}
+		}
+		return -1;
 	},
 
 	moveBottom: function () {
-		 let random = {}
-		 random.executed = false;
+		let random = {}
+		random.executed = false;
 
-		 for (let c = 0; c < 5; c++) {
-			  this.moveBottomInRow(c, random);
-		 }
+		for (let c = 0; c < 5; c++) {
+			this.moveBottomInRow(c, random);
+		}
 
-		 this.dataView();
+		this.dataView();
 	},
 
 	moveBottomInRow: function (c, random) {
-		 for (let r = 4; r > 0; r--) {
-			  let nextr = this.bottomGetNextInRow(c, r);
+		for (let r = 4; r > 0; r--) {
+			let nextr = this.bottomGetNextInRow(c, r);
 
-			  if (nextr !== -1) {
-					let activeCell = document.getElementById('v' + nextr + c),
-						 goalCell = document.getElementById('v' + r + c),
-						 coordinateCell = document.getElementById('c' + r + c);
+			if (nextr !== -1) {
+				let activeCell = document.getElementById('v' + nextr + c),
+					goalCell = document.getElementById('v' + r + c),
+					coordinateCell = document.getElementById('c' + r + c);
 
-					if (this.data[r][c] === 0) {
-						 this.data[r][c] = this.data[nextr][c];
-						 this.data[nextr][c] = 0;
+				if (this.data[r][c] === 0) {
+					this.data[r][c] = this.data[nextr][c];
+					this.data[nextr][c] = 0;
 
-						 activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
+					activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
 
-						 activeCell.style.left = coordinateCell.offsetLeft + 'px';
-						 activeCell.style.top = coordinateCell.offsetTop + 'px';
+					activeCell.style.left = coordinateCell.offsetLeft + 'px';
+					activeCell.style.top = coordinateCell.offsetTop + 'px';
 
-						 activeCell.id = 'v' + r + c;
+					activeCell.id = 'v' + r + c;
 
-						 r++;
-					} else if (this.data[r][c] === this.data[nextr][c]) {
-						 this.data[r][c] *= 2;
-						 this.data[nextr][c] = 0;
-						 this.score += this.data[r][c];
+					r++;
+				} else if (this.data[r][c] === this.data[nextr][c]) {
+					this.data[r][c] *= 2;
+					this.data[nextr][c] = 0;
+					this.score += this.data[r][c];
 
-						 activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
+					activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
 
-						 activeCell.style.left = coordinateCell.offsetLeft + 'px';
-						 activeCell.style.top = coordinateCell.offsetTop + 'px';
-					}
-			  } else {
-					break;
-			  }
-		 }
+					activeCell.style.left = coordinateCell.offsetLeft + 'px';
+					activeCell.style.top = coordinateCell.offsetTop + 'px';
+				}
+			} else {
+				break;
+			}
+		}
 	},
 
 	bottomGetNextInRow: function (c, r) {
-		 for (let i = r - 1; i >= 0; i--) {
-			  if (this.data[i][c] !== 0) {
-					return i;
-			  }
-		 }
-		 return -1;
+		for (let i = r - 1; i >= 0; i--) {
+			if (this.data[i][c] !== 0) {
+				return i;
+			}
+		}
+		return -1;
 	},
 
 	transitionend: (activeCell, random) => {
-		 activeCell.removeEventListener('transitionend', this.transitionend);
-		 game.randomNumWrapper(random);
+		activeCell.removeEventListener('transitionend', this.transitionend);
+		game.randomNumWrapper(random);
 	},
 
 	transitionendX2: (activeCell, goalCell, number, random) => {
-		 goalCell.className = 'cell active-cell n' + number;
-		 goalCell.innerHTML = number;
-		 activeCell.remove();
-		 game.randomNumWrapper(random);
+		goalCell.className = 'cell active-cell n' + number;
+		goalCell.innerHTML = number;
+		activeCell.remove();
+		game.randomNumWrapper(random);
 	},
 
 	randomNumWrapper: function (random) {
-		 const activeCells = document.querySelectorAll('.active-cell');
+		const activeCells = document.querySelectorAll('.active-cell');
 
-		 if (activeCells.length !== 25 && !random.executed) {
-			  this.randomNum();
-			  random.executed = true;
-		 }
+		if (activeCells.length !== 25 && !random.executed) {
+			this.randomNum();
+			random.executed = true;
+		}
 	},
 }
 
@@ -433,22 +469,22 @@ game.start();
 
 document.onkeydown = debounce(function (event) {
 	if (game.state === GameState.RUNNING) {
-		 switch (event.code) {
-			  case 'ArrowLeft':
-					game.moveLeft();
-					break;
-			  case 'ArrowUp':
-					game.moveTop();
-					break;
-			  case 'ArrowRight':
-					game.moveRight();
-					break;
-			  case 'ArrowDown':
-					game.moveBottom();
-					break;
-		 }
+		switch (event.code) {
+			case 'ArrowLeft':
+				game.moveLeft();
+				break;
+			case 'ArrowUp':
+				game.moveTop();
+				break;
+			case 'ArrowRight':
+				game.moveRight();
+				break;
+			case 'ArrowDown':
+				game.moveBottom();
+				break;
+		}
 
-		 accessMove = false;
+		accessMove = false;
 	}
 }, 300);
 
@@ -463,24 +499,24 @@ document.querySelector(".container").addEventListener("touchstart", function (ev
 
 document.querySelector(".container").addEventListener("touchend", debounce(function (event) {
 	if (game.state === GameState.RUNNING) {
-		 event = event || e || arguments[0];
-		 endX = event.changedTouches[0].pageX;
-		 endY = event.changedTouches[0].pageY;
+		event = event || e || arguments[0];
+		endX = event.changedTouches[0].pageX;
+		endY = event.changedTouches[0].pageY;
 
-		 let x = endX - startX;
-		 let y = endY - startY;
+		let x = endX - startX;
+		let y = endY - startY;
 
-		 let absX = Math.abs(x) > Math.abs(y);
-		 let absY = Math.abs(y) > Math.abs(x);
-		 if (x > 0 && absX) {
-			  game.moveRight();
-		 } else if (x < 0 && absX) {
-			  game.moveLeft();
-		 } else if (y > 0 && absY) {
-			  game.moveBottom();
-		 } else if (y < 0 && absY) {
-			  game.moveTop();
-		 }
+		let absX = Math.abs(x) > Math.abs(y);
+		let absY = Math.abs(y) > Math.abs(x);
+		if (x > 0 && absX) {
+			game.moveRight();
+		} else if (x < 0 && absX) {
+			game.moveLeft();
+		} else if (y > 0 && absY) {
+			game.moveBottom();
+		} else if (y < 0 && absY) {
+			game.moveTop();
+		}
 	}
 }, 300));
 
@@ -496,41 +532,39 @@ document.querySelector(".container").addEventListener('mouseup', debounce(functi
 	e.preventDefault();
 
 	if (game.state === GameState.RUNNING) {
-		 eX = e.clientX;
-		 eY = e.clientY;
+		eX = e.clientX;
+		eY = e.clientY;
 
-		 let x = eX - sX;
-		 let y = eY - sY;
+		let x = eX - sX;
+		let y = eY - sY;
 
-		 let abs_X = Math.abs(x) > Math.abs(y);
-		 let abs_Y = Math.abs(y) > Math.abs(x);
-		 if (x > 0 && abs_X) {
-			  game.moveRight();
-		 } else if (x < 0 && abs_X) {
-			  game.moveLeft();
-		 } else if (y > 0 && abs_Y) {
-			  game.moveBottom();
-		 } else if (y < 0 && abs_Y) {
-			  game.moveTop();
-		 }
+		let abs_X = Math.abs(x) > Math.abs(y);
+		let abs_Y = Math.abs(y) > Math.abs(x);
+		if (x > 0 && abs_X) {
+			game.moveRight();
+		} else if (x < 0 && abs_X) {
+			game.moveLeft();
+		} else if (y > 0 && abs_Y) {
+			game.moveBottom();
+		} else if (y < 0 && abs_Y) {
+			game.moveTop();
+		}
 	}
-}, 300),);
+}, 300));
 
-function debounce (f, ms) {
+function debounce(f, ms) {
 	let isCooldown = false;
 
 	return function () {
-		 if (isCooldown) return;
+		if (isCooldown) return;
 
-		 f.apply(this, arguments);
+		f.apply(this, arguments);
 
-		 isCooldown = true;
+		isCooldown = true;
 
-		 setTimeout(() => isCooldown = false, ms);
+		setTimeout(() => isCooldown = false, ms);
 	};
 }
-
-
 
 
 
