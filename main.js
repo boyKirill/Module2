@@ -59,7 +59,7 @@ let game = {
 	addActiveCell: function (currentCell) {
 		const activeCell = document.createElement("div");
 
-		activeCell.classList.add('active-cell', 'cell', 'n' + this.data[this.gR][this.gC]);
+		activeCell.classList.add('active-cell', 'new-cell', 'cell', 'n' + this.data[this.gR][this.gC]);
 		activeCell.id = 'v' + this.gR + this.gC;
 		activeCell.innerHTML = this.data[this.gR][this.gC];
 
@@ -69,43 +69,7 @@ let game = {
 		game.container.appendChild(activeCell);
 	},
 
-	resize: function () {
-		window.addEventListener("resize", function () {
-			let activeCells = document.querySelectorAll('.active-cell');
-
-			function newCor(activeCells) {
-				for (let item of activeCells) {
-					let idItem = item.id;
-					let r = idItem[1];
-					let c = idItem[2];
-					coordinateCell = document.getElementById('c' + r + c);
-					item.style.left = coordinateCell.offsetLeft + 'px';
-					item.style.top = coordinateCell.offsetTop + 'px';
-				}
-			}
-
-			if (window.matchMedia("(max-width: 320px)").matches) {
-				newCor(activeCells);
-
-			} else if (window.matchMedia("(max-width: 360px)").matches) {
-				newCor(activeCells);
-			}
-			else if (window.matchMedia("(max-width: 460px)").matches) {
-				newCor(activeCells);
-			}
-			else if (window.matchMedia("(max-width: 846px)").matches) {
-				newCor(activeCells);
-			}
-			else if (window.matchMedia("(min-width: 846px)").matches) {
-				newCor(activeCells);
-			}
-		})
-
-	},
-
 	dataView: function () {
-		this.resize();
-
 		const gamewinBlock = document.getElementById('gamewin');
 		const gameoverBlock = document.getElementById('gameover');
 
@@ -448,9 +412,11 @@ let game = {
 		game.randomNumWrapper(random);
 	},
 
+	
 	transitionendX2: (activeCell, goalCell, number, random) => {
-		goalCell.className = 'cell active-cell n' + number;
+		goalCell.className = 'cell swoop active-cell n' + number;
 		goalCell.innerHTML = number;
+		deleteClass();	
 		activeCell.remove();
 		game.randomNumWrapper(random);
 	},
@@ -552,6 +518,44 @@ document.querySelector(".container").addEventListener('mouseup', debounce(functi
 	}
 }, 300));
 
+
+let calculatePosition = throttle(function () {
+	let activeCells = document.querySelectorAll('.active-cell');
+
+	for (let activeCell of activeCells) {
+		let r = activeCell.id[1];
+		let c = activeCell.id[2];
+
+		let coordinateCell = document.getElementById('c' + r + c);
+
+		activeCell.style.left = coordinateCell.offsetLeft + 'px';
+		activeCell.style.top = coordinateCell.offsetTop + 'px';
+	}
+}, 300);
+
+new ResizeObserver(calculatePosition).observe(document.getElementById('game-container'));
+
+let deleteClass = throttle(function () {
+	let activeCells = document.querySelectorAll('.active-cell');
+	
+	for(let activeCell of activeCells){
+		activeCell.classList.remove('swoop');
+	}
+}, 300)
+
+function throttle(func, ms) {
+	let timeoutId;
+
+	return function () {
+		if (timeoutId){
+			clearTimeout(timeoutId);
+		}
+		
+		timeoutId = setTimeout(func, ms);
+		
+	} 
+}
+
 function debounce(f, ms) {
 	let isCooldown = false;
 
@@ -565,6 +569,8 @@ function debounce(f, ms) {
 		setTimeout(() => isCooldown = false, ms);
 	};
 }
+
+
 
 
 

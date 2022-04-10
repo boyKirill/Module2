@@ -118,13 +118,16 @@ main {
 
 .active-cell {
   position: absolute;
-  -webkit-animation: active-cell 0.3s linear 1;
-          animation: active-cell 0.3s linear 1;
 }
 
 .swoop {
   -webkit-animation: swoop 0.2s linear 1;
           animation: swoop 0.2s linear 1;
+}
+
+.new-cell {
+  -webkit-animation: new-cell 0.3s linear 1;
+          animation: new-cell 0.3s linear 1;
 }
 
 .cell {
@@ -148,11 +151,11 @@ main {
   font-weight: bold;
   color: #fff;
   font-family: "Lato", sans-serif;
-  -webkit-transition: .2s;
-  transition: .2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
-@-webkit-keyframes active-cell {
+@-webkit-keyframes new-cell {
   0% {
     -webkit-transform: scale(0);
             transform: scale(0);
@@ -163,7 +166,7 @@ main {
   }
 }
 
-@keyframes active-cell {
+@keyframes new-cell {
   0% {
     -webkit-transform: scale(0);
             transform: scale(0);

@@ -93,11 +93,13 @@ main {
 
 .active-cell {
 	position: absolute;
-	animation: active-cell 0.3s linear 1;
 }
 
 .swoop {
 	animation: swoop 0.2s linear 1;
+}
+.new-cell {
+	animation: new-cell 0.3s linear 1;
 }
 
 .cell {
@@ -118,7 +120,7 @@ main {
 	transition: 0.2s;
 }
 
-@keyframes active-cell {
+@keyframes new-cell {
 	0% {
 		transform: scale(0);
 	}
