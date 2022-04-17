@@ -4,6 +4,7 @@ const GameState = {
 };
 
 let game = {
+	steps: [],
 	data: [],
 	container: document.getElementById('game-container'),
 	score: 0,
@@ -38,6 +39,7 @@ let game = {
 		this.randomNum();
 	},
 
+
 	randomNum: function () {
 		while (true) {
 
@@ -66,10 +68,13 @@ let game = {
 		activeCell.style.left = currentCell.offsetLeft + 'px';
 		activeCell.style.top = currentCell.offsetTop + 'px';
 
-		game.container.appendChild(activeCell);
+		this.container.appendChild(activeCell);
 	},
 
 	dataView: function () {
+		console.log(this.steps);
+		this.animate();
+
 		const gamewinBlock = document.getElementById('gamewin');
 		const gameoverBlock = document.getElementById('gameover');
 
@@ -93,7 +98,7 @@ let game = {
 			gamewinBlock.style.pointerEvents = 'none';
 		}
 
-		if (game.isGameOver()) {
+		if (this.isGameOver()) {
 			document.getElementById('score_2').innerHTML = this.score;
 
 			if (this.score > this.record) {
@@ -172,42 +177,37 @@ let game = {
 			}
 		}
 
-		game.state = GameState.NOT_RUNNING;
+		this.state = GameState.NOT_RUNNING;
 
 		return true;
 	},
 
 	moveLeft: function () {
-		let random = {}
-
-		random.executed = false;
 
 		for (let r = 0; r < 5; r++) {
-			this.moveLeftInRow(r, random);
+			this.moveLeftInRow(r);
 		}
 
 		this.dataView();
 	},
 
-	moveLeftInRow: function (r, random) {
+	moveLeftInRow: async function (r) {
 		for (let c = 0; c < 4; c++) {
 			let nextc = this.leftGetNextInRow(r, c);
 
 			if (nextc !== -1) {
 				let activeCell = document.getElementById('v' + r + nextc),
-					goalCell = document.getElementById('v' + r + c),
 					coordinateCell = document.getElementById('c' + r + c);
 
 				if (this.data[r][c] === 0) {
 					this.data[r][c] = this.data[r][nextc];
 					this.data[r][nextc] = 0;
 
-					activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
-
-					activeCell.style.left = coordinateCell.offsetLeft + 'px';
-					activeCell.style.top = coordinateCell.offsetTop + 'px';
-
-					activeCell.id = 'v' + r + c;
+					this.steps.push({
+						'remove': false,
+						'activeCell': activeCell,
+						'coordinateCell': coordinateCell,
+					});
 
 					c--;
 				} else if (this.data[r][c] === this.data[r][nextc]) {
@@ -216,10 +216,12 @@ let game = {
 					this.data[r][nextc] = 0;
 					this.score += this.data[r][c];
 
-					activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
-
-					activeCell.style.left = coordinateCell.offsetLeft + 'px';
-					activeCell.style.top = coordinateCell.offsetTop + 'px';
+					this.steps.push({
+						'remove': true,
+						'activeCell': activeCell,
+						'coordinateCell': coordinateCell,
+						'number': this.data[r][c],
+					});
 				}
 			} else {
 				break;
@@ -237,35 +239,30 @@ let game = {
 	},
 
 	moveRight: function () {
-		let random = {}
-		random.executed = false;
-
 		for (let r = 0; r < 5; r++) {
-			this.moveRightInRow(r, random);
+			this.moveRightInRow(r);
 		}
 
 		this.dataView();
 	},
 
-	moveRightInRow: function (r, random) {
+	moveRightInRow: function (r) {
 		for (let c = 4; c > 0; c--) {
 			let nextc = this.rightGetNextInRow(r, c);
 
 			if (nextc !== -1) {
 				let activeCell = document.getElementById('v' + r + nextc),
-					goalCell = document.getElementById('v' + r + c),
 					coordinateCell = document.getElementById('c' + r + c);
 
 				if (this.data[r][c] === 0) {
 					this.data[r][c] = this.data[r][nextc];
 					this.data[r][nextc] = 0;
 
-					activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
-
-					activeCell.style.left = coordinateCell.offsetLeft + 'px';
-					activeCell.style.top = coordinateCell.offsetTop + 'px';
-
-					activeCell.id = 'v' + r + c;
+					this.steps.push({
+						'remove': false,
+						'activeCell': activeCell,
+						'coordinateCell': coordinateCell,
+					});
 
 					c++;
 				} else if (this.data[r][c] === this.data[r][nextc]) {
@@ -273,10 +270,12 @@ let game = {
 					this.data[r][nextc] = 0;
 					this.score += this.data[r][c];
 
-					activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
-
-					activeCell.style.left = coordinateCell.offsetLeft + 'px';
-					activeCell.style.top = coordinateCell.offsetTop + 'px';
+					this.steps.push({
+						'remove': true,
+						'activeCell': activeCell,
+						'coordinateCell': coordinateCell,
+						'number': this.data[r][c],
+					});
 				}
 			} else {
 				break;
@@ -294,35 +293,30 @@ let game = {
 	},
 
 	moveTop: function () {
-		let random = {}
-		random.executed = false;
-
 		for (let c = 0; c < 5; c++) {
-			this.moveTopInRow(c, random);
+			this.moveTopInRow(c);
 		}
 
 		this.dataView();
 	},
 
-	moveTopInRow: function (c, random) {
+	moveTopInRow: function (c) {
 		for (let r = 0; r < 4; r++) {
 			let nextr = this.topGetNextInRow(c, r);
 
 			if (nextr !== -1) {
 				let activeCell = document.getElementById('v' + nextr + c),
-					goalCell = document.getElementById('v' + r + c),
 					coordinateCell = document.getElementById('c' + r + c);
 
 				if (this.data[r][c] === 0) {
 					this.data[r][c] = this.data[nextr][c];
 					this.data[nextr][c] = 0;
 
-					activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
-
-					activeCell.style.left = coordinateCell.offsetLeft + 'px';
-					activeCell.style.top = coordinateCell.offsetTop + 'px';
-
-					activeCell.id = 'v' + r + c;
+					this.steps.push({
+						'remove': false,
+						'activeCell': activeCell,
+						'coordinateCell': coordinateCell,
+					});
 
 					r--;
 				} else if (this.data[r][c] === this.data[nextr][c]) {
@@ -330,10 +324,12 @@ let game = {
 					this.data[nextr][c] = 0;
 					this.score += this.data[r][c];
 
-					activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
-
-					activeCell.style.left = coordinateCell.offsetLeft + 'px';
-					activeCell.style.top = coordinateCell.offsetTop + 'px';
+					this.steps.push({
+						'remove': true,
+						'activeCell': activeCell,
+						'coordinateCell': coordinateCell,
+						'number': this.data[r][c],
+					});
 				}
 			} else {
 				break;
@@ -351,46 +347,42 @@ let game = {
 	},
 
 	moveBottom: function () {
-		let random = {}
-		random.executed = false;
-
 		for (let c = 0; c < 5; c++) {
-			this.moveBottomInRow(c, random);
+			this.moveBottomInRow(c);
 		}
 
 		this.dataView();
 	},
 
-	moveBottomInRow: function (c, random) {
+	moveBottomInRow: function (c) {
 		for (let r = 4; r > 0; r--) {
 			let nextr = this.bottomGetNextInRow(c, r);
 
 			if (nextr !== -1) {
 				let activeCell = document.getElementById('v' + nextr + c),
-					goalCell = document.getElementById('v' + r + c),
 					coordinateCell = document.getElementById('c' + r + c);
 
 				if (this.data[r][c] === 0) {
 					this.data[r][c] = this.data[nextr][c];
 					this.data[nextr][c] = 0;
 
-					activeCell.addEventListener("transitionend", this.transitionend.bind(this, activeCell, random));
-
-					activeCell.style.left = coordinateCell.offsetLeft + 'px';
-					activeCell.style.top = coordinateCell.offsetTop + 'px';
-
-					activeCell.id = 'v' + r + c;
-
+					this.steps.push({
+						'remove': false,
+						'activeCell': activeCell,
+						'coordinateCell': coordinateCell,
+					});
 					r++;
 				} else if (this.data[r][c] === this.data[nextr][c]) {
 					this.data[r][c] *= 2;
 					this.data[nextr][c] = 0;
 					this.score += this.data[r][c];
 
-					activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, activeCell, goalCell, this.data[r][c], random));
-
-					activeCell.style.left = coordinateCell.offsetLeft + 'px';
-					activeCell.style.top = coordinateCell.offsetTop + 'px';
+					this.steps.push({
+						'remove': true,
+						'activeCell': activeCell,
+						'coordinateCell': coordinateCell,
+						'number': this.data[r][c],
+					});
 				}
 			} else {
 				break;
@@ -407,18 +399,49 @@ let game = {
 		return -1;
 	},
 
-	transitionend: (activeCell, random) => {
-		activeCell.removeEventListener('transitionend', this.transitionend);
-		game.randomNumWrapper(random);
+	animate: function () {
+		const random = {
+			'executed': false,
+		}
+
+		for (const step of this.steps) {
+			if (step.remove) {
+				console.log(step.coordinateCell.id.slice(1));
+				step.activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, step.activeCell, 'v' + step.coordinateCell.id.slice(1), step.number, random));
+			} else {
+				step.activeCell.addEventListener("transitionend", this.transitionend.bind(this, step.activeCell, random));
+			}
+		}
+
+		for (const step of this.steps) {
+			if (step.remove) {
+				step.activeCell.style.left = step.coordinateCell.offsetLeft + 'px';
+				step.activeCell.style.top = step.coordinateCell.offsetTop + 'px';
+
+			} else {
+				step.activeCell.style.left = step.coordinateCell.offsetLeft + 'px';
+				step.activeCell.style.top = step.coordinateCell.offsetTop + 'px';
+
+				step.activeCell.id = 'v' + step.coordinateCell.id.slice(1);
+			}
+		}
+
+		this.steps = [];
 	},
 
-	
-	transitionendX2: (activeCell, goalCell, number, random) => {
+	transitionend: function (activeCell, random) {
+		activeCell.removeEventListener('transitionend', this.transitionend);
+		this.randomNumWrapper(random);
+	},
+
+
+	transitionendX2: function (activeCell, goalCellId, number, random) {
+		const goalCell = document.getElementById(goalCellId);
 		goalCell.className = 'cell swoop active-cell n' + number;
+		deleteClass();
 		goalCell.innerHTML = number;
-		deleteClass();	
 		activeCell.remove();
-		game.randomNumWrapper(random);
+		this.randomNumWrapper(random);
 	},
 
 	randomNumWrapper: function (random) {
@@ -537,23 +560,23 @@ new ResizeObserver(calculatePosition).observe(document.getElementById('game-cont
 
 let deleteClass = throttle(function () {
 	let activeCells = document.querySelectorAll('.active-cell');
-	
-	for(let activeCell of activeCells){
+
+	for (let activeCell of activeCells) {
 		activeCell.classList.remove('swoop');
 	}
-}, 300)
+}, 300);
 
 function throttle(func, ms) {
 	let timeoutId;
 
 	return function () {
-		if (timeoutId){
+		if (timeoutId) {
 			clearTimeout(timeoutId);
 		}
-		
+
 		timeoutId = setTimeout(func, ms);
-		
-	} 
+
+	}
 }
 
 function debounce(f, ms) {

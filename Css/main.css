@@ -120,14 +120,14 @@ main {
   position: absolute;
 }
 
-.swoop {
-  -webkit-animation: swoop 0.2s linear 1;
-          animation: swoop 0.2s linear 1;
-}
-
 .new-cell {
   -webkit-animation: new-cell 0.3s linear 1;
           animation: new-cell 0.3s linear 1;
+}
+
+.swoop {
+  -webkit-animation: swoop 0.2s linear 1;
+          animation: swoop 0.2s linear 1;
 }
 
 .cell {

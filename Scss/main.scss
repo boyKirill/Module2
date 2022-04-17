@@ -95,11 +95,12 @@ main {
 	position: absolute;
 }
 
-.swoop {
-	animation: swoop 0.2s linear 1;
-}
 .new-cell {
 	animation: new-cell 0.3s linear 1;
+}
+
+.swoop {
+	animation: swoop 0.2s linear 1;
 }
 
 .cell {
