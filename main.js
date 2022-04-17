@@ -72,7 +72,6 @@ let game = {
 	},
 
 	dataView: function () {
-		console.log(this.steps);
 		this.animate();
 
 		const gamewinBlock = document.getElementById('gamewin');
@@ -183,7 +182,6 @@ let game = {
 	},
 
 	moveLeft: function () {
-
 		for (let r = 0; r < 5; r++) {
 			this.moveLeftInRow(r);
 		}
@@ -191,7 +189,7 @@ let game = {
 		this.dataView();
 	},
 
-	moveLeftInRow: async function (r) {
+	moveLeftInRow: function (r) {
 		for (let c = 0; c < 4; c++) {
 			let nextc = this.leftGetNextInRow(r, c);
 
@@ -405,8 +403,8 @@ let game = {
 		}
 
 		for (const step of this.steps) {
+			
 			if (step.remove) {
-				console.log(step.coordinateCell.id.slice(1));
 				step.activeCell.addEventListener("transitionend", this.transitionendX2.bind(this, step.activeCell, 'v' + step.coordinateCell.id.slice(1), step.number, random));
 			} else {
 				step.activeCell.addEventListener("transitionend", this.transitionend.bind(this, step.activeCell, random));
@@ -437,7 +435,7 @@ let game = {
 
 	transitionendX2: function (activeCell, goalCellId, number, random) {
 		const goalCell = document.getElementById(goalCellId);
-		goalCell.className = 'cell swoop active-cell n' + number;
+		goalCell.className = 'active-cell cell swoop  n' + number;
 		deleteClass();
 		goalCell.innerHTML = number;
 		activeCell.remove();
